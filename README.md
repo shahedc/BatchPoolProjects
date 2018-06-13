@@ -6,7 +6,7 @@ Derived from Microsoft's Azure Batch Samples:
 - Article: https://docs.microsoft.com/en-us/azure/batch/batch-dotnet-get-started 
 
 
-# Steps to run the project
+# Steps to run the BatchPoolApp project
 
 1. Create a new Batch account in Azure.
 
@@ -17,6 +17,8 @@ Derived from Microsoft's Azure Batch Samples:
 
 3. Create a config file using the template provided.
     - _(see instructions in Config File section)_
+
+4. In the *CreatePoolIfNotExistAsync()* method of the *Program.cs* file, edit the call to *PoolOperations.CreatePool()* to use either a *cloudServiceConfiguration* or *virtualMachineConfiguration*. Note that VM images must be located in the same Region and Subscription as the Batch account.
 
 4. Build the Solution in Visual Studio (2017).
 

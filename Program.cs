@@ -42,6 +42,9 @@ namespace BatchPoolProjects
         private static string PoolId = ConfigurationManager.AppSettings["PoolId"];
         private static string JobId = ConfigurationManager.AppSettings["JobId"];
 
+        // VM image settings
+        private static string VirtualMachineImageId = ConfigurationManager.AppSettings["VirtualMachineImageId"];
+
         public static async Task<string> GetAuthenticationTokenAsync()
         {
             var authContext = new AuthenticationContext(AuthorityUri);
@@ -340,8 +343,7 @@ namespace BatchPoolProjects
 
 
                     virtualMachineConfiguration: new VirtualMachineConfiguration(
-                        new ImageReference(
-                            virtualMachineImageId: "/subscriptions/3fee811e-11bf-4b5c-9c62-a2f28b517724/resourceGroups/3dtoolkit/providers/Microsoft.Compute/images/3dtoolkit-cloud-image-20180511105737"),
+                        new ImageReference(virtualMachineImageId: VirtualMachineImageId),
                         nodeAgentSkuId: "batch.node.windows amd64")
 
                     //virtualMachineConfiguration: new VirtualMachineConfiguration(
