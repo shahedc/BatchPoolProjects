@@ -1,6 +1,11 @@
 # BatchPoolProjects
 Azure Batch .NET projects to spin up VMs
 
+Derived from Microsoft's Azure Batch Samples:
+- Sample Code: https://github.com/Azure/azure-batch-samples/tree/master/CSharp/ArticleProjects/DotNetTutorial
+- Article: https://docs.microsoft.com/en-us/azure/batch/batch-dotnet-get-started 
+
+
 # Steps to run the project
 
 1. Create a new Batch account in Azure.
@@ -43,3 +48,13 @@ Make a copy of the config file template "AppSettingsSecrets.config.txt" and remo
   <add key="JobId" value="REPLACE-JobId" />
 </appSettings>
 ```
+
+# Further Documentation
+
+- Create pool: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.batch.pooloperations.createpool?view=azure-dotnet
+
+- Cloud Service Configuration: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.batch.cloudserviceconfiguration?view=azure-dotnet
+
+- Virtual Machine Configuration: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.batch.virtualmachineconfiguration?view=azure-dotnet
+
+- Create pool with custom images: https://docs.microsoft.com/en-us/azure/batch/batch-custom-images
