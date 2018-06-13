@@ -17,6 +17,7 @@ namespace BatchPoolProjects
     using Microsoft.WindowsAzure.Storage.Blob;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using System.Configuration;
+    using System.Linq;
 
     public class Program
     {
@@ -356,6 +357,9 @@ namespace BatchPoolProjects
 
                     //virtualMachineConfiguration: new VirtualMachineConfiguration(new ImageReference(offer: "UbuntuServer", publisher: "Canonical", sku: "14.04.5-LTS"), nodeAgentSkuId: "batch.node.ubuntu 14.04")
                     );
+
+                pool.NetworkConfiguration = GetNetworkConfiguration();
+
                 // Create and assign the StartTask that will be executed when compute nodes join the pool.
                 // In this case, we copy the StartTask's resource files (that will be automatically downloaded
                 // to the node by the StartTask) into the shared directory that all tasks will have access to.
@@ -388,6 +392,50 @@ namespace BatchPoolProjects
                     throw; // Any other exception is unexpected
                 }
             }
+        }
+
+        private static NetworkConfiguration GetNetworkConfiguration()
+        {
+            return new NetworkConfiguration
+            {
+                EndpointConfiguration = new PoolEndpointConfiguration(new InboundNatPool[]
+                   {
+                    // No NSG - default is to allow all access
+                    new InboundNatPool(
+                        name: "ControlPlane", 
+                        protocol: InboundEndpointProtocol.Tcp,
+                        backendPort: 56001,
+                        frontendPortRangeStart: 56001,
+                        frontendPortRangeEnd: 56040,
+                        networkSecurityGroupRules: new NetworkSecurityGroupRule[]
+                        {
+                            new NetworkSecurityGroupRule(
+                                priority: 150,
+                                access: NetworkSecurityGroupRuleAccess.Allow,
+                                sourceAddressPrefix: "59.102.23.127"),
+                            new NetworkSecurityGroupRule(
+                                priority: 151,
+                                access: NetworkSecurityGroupRuleAccess.Deny,
+                                sourceAddressPrefix: "*"),
+                        }),
+
+                    // NSG to allow single IP.  For more details on NSGs
+                    // https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg
+                    new InboundNatPool(
+                        name: "Host0",
+                        protocol: InboundEndpointProtocol.Tcp,
+                        backendPort: 8000,
+                        frontendPortRangeStart: 8000,
+                        frontendPortRangeEnd: 8039,
+                        networkSecurityGroupRules: new NetworkSecurityGroupRule[]
+                        {
+                            new NetworkSecurityGroupRule(
+                                priority: 160,
+                                access: NetworkSecurityGroupRuleAccess.Allow,
+                                sourceAddressPrefix: "Internet"),
+                        }),
+                   }.ToList())
+            };
         }
 
         /// <summary>
