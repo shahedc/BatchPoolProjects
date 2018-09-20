@@ -4,6 +4,8 @@ Azure Batch .NET projects to spin up VMs
 Derived from Microsoft's Azure Batch Samples:
 - Sample Code: https://github.com/Azure/azure-batch-samples/tree/master/CSharp/ArticleProjects/DotNetTutorial
 - Article: https://docs.microsoft.com/en-us/azure/batch/batch-dotnet-get-started 
+- 3D Toolkit Implementation Sample (in branch): https://github.com/3DStreamingToolkit/cloud-deploy/tree/function-batch/function-batch/BatchPoolWebApp
+- 3D Toolkit Iplementation (in master): https://github.com/3DStreamingToolkit/cloud-deploy/tree/master/web-api
 
 
 # Steps to run the BatchPoolApp project
